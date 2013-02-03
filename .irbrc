@@ -7,7 +7,6 @@ require 'rubygems' unless defined? Gem # only needed in 1.8
 require 'wirb'
 require 'fancy_irb'
 require 'every_day_irb'
-#require 'interactive_editor'
 require 'colorize'
 
 Wirb.start
