@@ -54,7 +54,7 @@ Some evaluations return strings, which may be unreadable for some longer strings
 == WARNINGS
 
 While bash evaluates left to right, ruby evaluates right to left (actually, more in a spiral[http://c-faq.com/decl/spiral.anderson.html]).
-You can wrap these commands in a string to get the proper valuation
+You can wrap these commands in a string to get the proper evaluation.
 
     $ git rm newFile        # Bash evaluates this as the git command, with the flag rm, on the file newFile
     > git rm newFile        # irb evaluates this the rm command on newFile, and passes that result to git
