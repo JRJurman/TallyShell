@@ -11,7 +11,7 @@ require 'colorize'
 
 Wirb.start
 FancyIrb.start
-$ttyPrograms = ['vim', 'elinks', 'less', 'man'] # programs that need the alias
+ttyPrograms = ['vim', 'elinks', 'less', 'man'] # programs that need the alias
 
 x = lambda do |s|
   def s.dup 
