@@ -11,9 +11,9 @@ require 'colorize'
 
 Wirb.start
 FancyIrb.start
-ttyPrograms = ['vim', 'elinks', 'less', 'man'] # programs that need the alias
+$ttyPrograms = ['vim', 'elinks', 'less', 'man'] # programs that need the alias
 
-x = lambda do |s|
+prompt_dup = lambda do |s|
   def s.dup 
     gsub('%u', prompt_user).\
     gsub('%~', prompt_dir).\
@@ -28,10 +28,10 @@ end
 #   and .dup lets us update it live
 IRB.conf[:PROMPT][:TALLYSHELL] = {}
 IRB.conf[:PROMPT][:TALLYSHELL] = {
-  :PROMPT_I => "%u%~%gb%gs\n%p".tap { |s| x.call(s) },  #   Normal Prompt
-  :PROMPT_S => "%u%~%gb%gs\n * ".tap { |s| x.call(s) }, #   Prompt for continuing strings
-  :PROMPT_C => "%u%~%gb%gs\n * ".tap { |s| x.call(s) }, #   Prompt for continuing statement
-  :PROMPT_N => "%u%~%gb%gs\n * ".tap { |s| x.call(s) }, #   Prompt for continuing function
+  :PROMPT_I => "%u%~%gb%gs\n%p".tap { |s| prompt_dup.call(s) },  #   Normal Prompt
+  :PROMPT_S => "%u%~%gb%gs\n * ".tap { |s| prompt_dup.call(s) }, #   Prompt for continuing strings
+  :PROMPT_C => "%u%~%gb%gs\n * ".tap { |s| prompt_dup.call(s) }, #   Prompt for continuing statement
+  :PROMPT_N => "%u%~%gb%gs\n * ".tap { |s| prompt_dup.call(s) }, #   Prompt for continuing function
   :RETURN => "==> %s\n"                               #   Prompt for return
 }
 
