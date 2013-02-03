@@ -1,0 +1,44 @@
+= TallyShell
+A configuration of IRB that allows for bash commands
+
+== Setup
+First install all the required gems
+    
+    cd TallyShell
+    bundle install
+
+Copy .irbrc to your home directory ...
+
+    cp TallyShell/.irbrc ~/.irbrc
+
+or setup a symbolic link ...
+
+    ln -s TallyShell/.irbrc .irbrc
+
+== Usage
+
+To run, just run irb in your default shell (it is not reccomended at this time to run irb as your default shell!)
+
+    irb
+
+== Limitations (or as I like to call them, 'features')
+
+TallyShell by default turns words with no predefined value or expression into strings.
+
+    hello world #=> "hello world"
+
+However if the word is a defined variable, ruby will call that and join it to the string.
+
+    foo = "world"
+    hello foo #=> "hello world"
+
+== TODO
+
+* more examples
+* fix bugs
+
+== Known bugs
+
+    foo = "hello"
+    foo world #=> expecting "hello world", got "foo world"
+
