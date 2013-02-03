@@ -17,7 +17,7 @@ or setup a symbolic link ...
 
 == Usage
 
-To run, just run irb in your default shell (it is not reccomended at this time to run irb as your default shell!)
+To run, just run irb in your default shell (it is not recommended at this time to run irb as your default shell!)
 
     irb
 
