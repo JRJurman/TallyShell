@@ -51,6 +51,14 @@ Some evaluations return strings, which may be unreadable for some longer strings
     # On branch master
     ...
 
+TallyShell even has support for full screen applications. These are defined in the $ttyPrograms at 
+the top of .irbrc, feel free to add your own, as this is not a comprehensive list.
+
+    > f = newFile   #=> "newFile"
+    > touch f       #=> ""
+    > vim f         #=> ""
+    > cat f         #=> "Foo bar\n"
+
 == WARNINGS
 
 While bash evaluates left to right, ruby evaluates right to left (actually, more in a spiral[http://c-faq.com/decl/spiral.anderson.html]).
@@ -71,6 +79,12 @@ When using flags that contain the '-' character, wrap it in a string, as irb wil
 When working with files that have a '.' character, wrap it in a string, as irb will evaluate it as the method of an object.
 
     > touch 'newFile.rb'
+
+When working with directories that have a '/' at the end, either delete it, or wrap it in a string before running it,
+as irb will treat this a division on the string
+
+    > cd TallyShell
+    > cd "TallyShell/"
 
 The moral of the story: wrap it in a string.
 
