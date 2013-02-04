@@ -4,33 +4,89 @@ A configuration of IRB that allows for bash commands
 == Setup
 First install all the required gems
     
-    cd TallyShell
-    bundle install
+    $ cd TallyShell
+    $ bundle install
 
 Copy .irbrc to your home directory ...
 
-    cp TallyShell/.irbrc ~/.irbrc
+    $ cp TallyShell/.irbrc ~/.irbrc
 
 or setup a symbolic link ...
 
-    ln -s TallyShell/.irbrc .irbrc
+    $ ln -s TallyShell/.irbrc ~/.irbrc
 
 == Usage
 
-To run, just run irb in your default shell (it is not reccomended at this time to run irb as your default shell!)
+To run, just run irb in your default shell (it is not recommended at this time to run irb as your default shell!)
 
-    irb
+    $ irb
 
-== Limitations (or as I like to call them, 'features')
+== Features
 
 TallyShell by default turns words with no predefined value or expression into strings.
 
-    hello world #=> "hello world"
+    > hello world #=> "hello world"
 
 However if the word is a defined variable, ruby will call that and join it to the string.
 
-    foo = "world"
-    hello foo #=> "hello world"
+    > foo = "world"
+    > hello foo #=> "hello world"
+
+The power of TallyShell is the ability to run linux commands as well as ruby expresions.
+
+    echo hello world #=> "hello world\n"
+
+We can even mix and match ruby and bash evaluations.
+
+    > f = newFile #=> "newFile"
+    > echo f      #=> "newFile\n"
+    > touch f     #=> ""
+    > ls          #=> ["newFile"...]
+    > rm f        #=> ""
+
+Some evaluations return strings, which may be unreadable for some longer strings, so append the puts command or save into a variable
+
+    > git status #=> "# On branch master\n#..."
+    > puts git status
+    # On branch master
+    ...
+
+TallyShell even has support for full screen applications. These are defined in the $ttyPrograms at 
+the top of .irbrc, feel free to add your own, as this is not a comprehensive list.
+
+    > f = newFile   #=> "newFile"
+    > touch f       #=> ""
+    > vim f         #=> ""
+    > cat f         #=> "Foo bar\n"
+
+== WARNINGS
+
+While bash evaluates left to right, ruby evaluates right to left (actually, more in a spiral[http://c-faq.com/decl/spiral.anderson.html]).
+You can wrap these commands in a string to get the proper evaluation.
+
+    $ git rm newFile        # Bash evaluates this as the git command, with the flag rm, on the file newFile
+    > git rm newFile        # irb evaluates this the rm command on newFile, and passes that result to git
+    > git 'rm newFile'      # irb evaluates this as the git command, with the string 'rm newFile'
+
+When not using a linux command as a flag, irb will evaluate it as a ruby object, and pass it to the next value
+
+    > git add newFile
+
+When using flags that contain the '-' character, wrap it in a string, as irb will try to evaluate it as a the subtraction of a string
+
+    > cat '-n newFile'
+
+When working with files that have a '.' character, wrap it in a string, as irb will evaluate it as the method of an object.
+
+    > touch 'newFile.rb'
+
+When working with directories that have a '/' at the end, either delete it, or wrap it in a string before running it,
+as irb will treat this a division on the string
+
+    > cd TallyShell
+    > cd "TallyShell/"
+
+The moral of the story: wrap it in a string.
 
 == TODO
 
