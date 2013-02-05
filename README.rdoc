@@ -2,7 +2,11 @@
 A configuration of IRB that allows for bash commands
 
 == Setup
-First install all the required gems
+First, if you don't have bundler, install that through gems
+
+    $ gem install bundler
+
+Then, install all the required gems
     
     $ cd TallyShell
     $ bundle install
