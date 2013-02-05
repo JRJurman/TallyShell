@@ -9,11 +9,11 @@ First install all the required gems
 
 Copy .irbrc to your home directory ...
 
-    $ cp TallyShell/.irbrc ~/.irbrc
+    $ cp .irbrc ~/.irbrc
 
 or setup a symbolic link ...
 
-    $ ln -s TallyShell/.irbrc ~/.irbrc
+    $ ln -s .irbrc ~/.irbrc
 
 == Usage
 
