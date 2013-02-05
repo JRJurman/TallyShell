@@ -127,7 +127,7 @@ def self.method_missing(*args)
   end
 
   # tell the user we are running a bash program
-  puts "> running #{method_id}".magenta
+  #puts "> running #{method_id}".magenta
 
   # if it's cd, do our special implementation
   if method_id == "cd"
@@ -135,7 +135,7 @@ def self.method_missing(*args)
 
   # if it's a tty program, do our special implementation
   elsif $ttyPrograms.include?(method_id) 
-    puts "aliasing tty application"
+    #puts "aliasing tty application"
     program_tty(args)
 
   # otherwise, do the system call, passing in any arguments
