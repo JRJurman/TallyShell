@@ -158,7 +158,7 @@ FancyIrb.set_result_proc do |context|
   end
 
   # don't display large output
-  if ((res.class == String) and (res.include?("\\n")) and (context.last_value.verbose.nil?))
+  if ((res.class == String) and (res.split("\\n").size > 2) and (context.last_value.verbose.nil?))
     "Multiline output ( stored in '_' )"
   else
     res
