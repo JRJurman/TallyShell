@@ -14,6 +14,7 @@ Wirb.start
 FancyIrb.start
 $ttyPrograms = ['vim', 'elinks', 'less', 
                 'man', 'bash', 'zsh'] # programs that need the alias
+$irb_store = nil
 
 prompt_dup = lambda do |s|
   def s.dup 
@@ -28,13 +29,11 @@ end
 #   Define the custom prompt
 #   .tap gives us a block for our object
 #   and .dup lets us update it live
-IRB.conf[:PROMPT][:TALLYSHELL] = {}
 IRB.conf[:PROMPT][:TALLYSHELL] = {
   :PROMPT_I => "%u%~%gb%gs\n%p".tap { |s| prompt_dup.call(s) },  #   Normal Prompt
   :PROMPT_S => "%u%~%gb%gs\n * ".tap { |s| prompt_dup.call(s) }, #   Prompt for continuing strings
   :PROMPT_C => "%u%~%gb%gs\n * ".tap { |s| prompt_dup.call(s) }, #   Prompt for continuing statement
   :PROMPT_N => "%u%~%gb%gs\n * ".tap { |s| prompt_dup.call(s) }, #   Prompt for continuing function
-  :RETURN => "==> %s\n"                               #   Prompt for return
 }
 
 #   Set IRB to use our custom prompt
@@ -149,9 +148,36 @@ def self.method_missing(*args)
 
 end
 
+#   Redefine fancy_irb's output to supress extremely long strings
+FancyIrb.set_result_proc do |context|
+  # default
+  if context.inspect?
+    res = context.last_value.inspect
+  else
+    res = context.last_value
+  end
+
+  # don't display large output
+  if ((res.class == String) and (res.include?("\\n")) and (context.last_value.verbose.nil?))
+    "Multiline output ( stored in '_' )"
+  else
+    res
+  end
+
+end
+
 #   Define Constant  Missing to handle uppercase words 
 class Object
-def self.const_missing(name)
-  name
+  def self.const_missing(name)
+    name
+  end
 end
+
+#   Add .v method to allow for verbose returning in irb
+class String
+  attr_accessor :verbose
+  def v
+    @verbose = true
+    self
+  end
 end
