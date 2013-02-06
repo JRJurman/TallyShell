@@ -2,7 +2,6 @@ GEM
   remote: https://rubygems.org/
   specs:
     colorize (0.5.8)
-    every_day_irb (1.4.0)
     fancy_irb (0.7.3)
       paint (>= 0.8.1)
       unicode-display_width (>= 0.1.1)
@@ -16,6 +15,5 @@ PLATFORMS
 
 DEPENDENCIES
   colorize
-  every_day_irb
   fancy_irb
   wirb

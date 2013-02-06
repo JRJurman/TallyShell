@@ -2,11 +2,12 @@
 # Created by Jesse Jurman
 
 # Rubygems required to run properly
-# Many of these are from irbtools, but this is a concise list
+# This is a few gems from a much larger set of irbtools,
+# for some functionality, others have been removed, 
+# but it is well worth checking out!
 require 'rubygems' unless defined? Gem # only needed in 1.8
 require 'wirb'
 require 'fancy_irb'
-require 'every_day_irb'
 require 'colorize'
 
 Wirb.start
@@ -140,7 +141,9 @@ def self.method_missing(*args)
 
   # otherwise, do the system call, passing in any arguments
   else
-    `#{method_id} #{args[1..-1].join(" ")}`
+    res = `#{method_id} #{args[1..-1].join(" ")}`
+    puts res
+    res
 
   end
 
