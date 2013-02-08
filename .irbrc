@@ -26,18 +26,21 @@ prompt_dup = lambda do |s|
   end
 end
 
+$x = ""
 #   Define the custom prompt
 #   .tap gives us a block for our object
 #   and .dup lets us update it live
 IRB.conf[:PROMPT][:TALLYSHELL] = {
   :PROMPT_I => "%u%~%gb%gs\n%p".tap { |s| prompt_dup.call(s) },  #   Normal Prompt
-  :PROMPT_S => "%u%~%gb%gs\n * ".tap { |s| prompt_dup.call(s) }, #   Prompt for continuing strings
-  :PROMPT_C => "%u%~%gb%gs\n * ".tap { |s| prompt_dup.call(s) }, #   Prompt for continuing statement
-  :PROMPT_N => "%u%~%gb%gs\n * ".tap { |s| prompt_dup.call(s) }, #   Prompt for continuing function
+  :PROMPT_S => " %l.. ".tap { |s| prompt_dup.call(s) }, #   Prompt for continuing strings
+  :PROMPT_C => " * ".tap { |s| prompt_dup.call(s) }, #   Prompt for continuing statement
+  :PROMPT_N => "%p".tap { |s| prompt_dup.call(s) }, #   Prompt for continuing function
+  #:PROMPT_N => " #{eval("(eval(\"'%i'.to_i\"))")} %p".tap { |s| prompt_dup.call(s) }, #   Prompt for continuing function
 }
 
 #   Set IRB to use our custom prompt
 IRB.conf[:PROMPT_MODE] = :TALLYSHELL
+IRB.conf[:AUTO_INDENT] = true
 
 #   Define the ending characters for the prompt
 #   also defines color for this item (colorize)
@@ -158,11 +161,13 @@ FancyIrb.set_result_proc do |context|
   end
 
   # don't display large output
-  if ((res.class == String) and (res.split("\\n").size > 2) and (context.last_value.verbose.nil?))
-    "Multiline output ( stored in '_' )"
-  else
-    res
+  if (context.last_value.class == String)
+    if ((res.split("\\n").size > 2) and (context.last_value.verbose.nil?))
+      res = "Multiline output ( stored in '_' )"
+    end
   end
+
+  res
 
 end
 
