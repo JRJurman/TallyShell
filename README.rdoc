@@ -1,6 +1,10 @@
 = TallyShell
 A configuration of IRB that allows for bash commands
 
+== GEM-IFY
+
+TallyShell is in the process of becoming a gem, until then, the documentation might not line up 1-1 with the current build.
+
 == Setup
 First, if you don't have bundler, install that through gems
 
@@ -13,11 +17,11 @@ Then, install all the required gems
 
 Copy .irbrc to your home directory ...
 
-    $ cp .irbrc ~/.irbrc
+    $ cp lib/tallyshell.rb ~/.irbrc
 
 or setup a symbolic link ...
 
-    $ ln -s .irbrc ~/.irbrc
+    $ ln -s lib/tallyshell.rb ~/.irbrc
 
 == Usage
 
